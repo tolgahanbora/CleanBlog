@@ -1,11 +1,15 @@
 import  Express  from "express";
+import path from "path";
 
 const app = Express()
 const port = 3000
+app.use(Express.static("public"))
+app.set("View engine", "ejs")
 
-const blog = { id: 1, title: "Blog title", description: "Blog description" }
+
 app.get("/", (req,res) => {
-    res.send(blog)
+ //  res.sendFile(path.resolve(__dirname, "public/index.html"))
+ res.render('index')
 })
 
 
