@@ -28,7 +28,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="/">Clean Blog</a>
+      <a class="navbar-brand" href="/">Start Bootstrap</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -50,46 +50,47 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/post-bg.jpg')">
+  <header class="masthead" style="background-image: url('img/contact-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-heading">
-            <h1><%= blog.title %></h1>
-            <h2 class="subheading"><%= blog.detail %></h2>
-            <span class="meta">Posted by
-              <a href="#">Start Bootstrap</a>
-              on August 24, 2019</span>
+          <div class="page-heading">
+            <h1>Edit Post</h1>
+
           </div>
         </div>
       </div>
-     
     </div>
-    
   </header>
 
-  <!-- Post Content -->
-  <article>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form method="POST" action="/blogs/<%= blog._id %>?_method=PUT" >
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Post Title</label>
+              <input type="text" name="title" class="form-control" placeholder="Post Title" id="title" required data-validation-required-message="Please content title." value="<%= blog.title %>">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Post Detail</label>
+              <textarea rows="5" class="form-control" placeholder="Content detail" name="detail" required data-validation-required-message="Please write a something."><%= blog.detail %></textarea>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <br>
+          <div id="success"></div>
           
-          <h2 class="section-heading"></h2>
-          <p></p>
-          <a href="/blogs/edit/<%= blog._id %>" class="btn btn-primary">Update</a>
-          <a href="/blogs/<%= blog._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE ?')" class="btn btn-danger">Delete </a>
-
-          
-
-          <p>Placeholder text by
-            <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
-            <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
-        </div>
-    
+          <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+        </form>
       </div>
     </div>
-  </article>
+  </div>
 
   <hr>
 
@@ -133,6 +134,10 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>

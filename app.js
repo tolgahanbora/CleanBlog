@@ -1,6 +1,8 @@
 import  express  from "express";
 import mongoose from "mongoose";
-import Blogs from "./Model/Blogs.js";
+import  {getfindBlog,getBlogCreate, getEditPost,getDeletePost} from '../CleanBlog/Controller/PostController.js'
+import {getHomePage,getAddPage,getAboutPage,getEditPage} from '../CleanBlog/Controller/PageController.js'
+import methodOverride from "method-override";
 
 
 const app = express()
@@ -15,38 +17,24 @@ mongoose.connect('mongodb://127.0.0.1:27017/clean-blog-db')
 app.use(express.static("public"))
 app.use(express.urlencoded({ extended:true })) //Bunlar olmazsa json dönüşmüyor ve çalışmıyor. Dikkat et.
 app.use(express.json())
-
+app.use(methodOverride('_method', {
+    methods: ["POST", "GET"]
+}))
 //TEMPLATE ENGINE 
 app.set("view engine", "ejs") //View engine ya da Views yazarsan çalışmaz. V'nin küçük olması gerek.
 
-app.get("/", async (req,res) => {
- //  res.sendFile(path.resolve(__dirname, "public/index.html"))
- const blogs = await Blogs.find() //Blogs adında bir değişken oluşturup, onu mongoose ile veri arama fonskiyonuna atadım.
- res.render('index', {
-    blogs  //atadığım değişkeni obje haline getirdim. ve index.ejs de tanımlayacağım. 
- })  
-})
+app.get("/", getHomePage )
 
-app.get("/blogs/:id", async (req,res) => {
-    const blog = await Blogs.findById(req.params.id)
-    res.render("blog", {
-        blog
-    })
-})
+app.get("/blogs/:id", getfindBlog)
 
 
-app.get("/about", (req,res)=> {
-    res.render("about")
-})
+app.get("/about", getAboutPage)
 
-app.get("/add", (req, res) => {
-    res.render("add")
-} )
-
-app.post("/blogs",  (req,res) =>{
-    Blogs.create(req.body) //post ile yakaladığım datayı, mongodb de fields oluşturttum.
-    res.redirect("/")
-})
+app.get("/add",getAddPage )
+app.get("/blogs/edit/:id", getEditPage)
+app.put("/blogs/:id",getEditPost )
+app.delete("/blogs/:id", getDeletePost)
+app.post("/blogs",getBlogCreate)
 
 app.listen(port, (err) => {
     console.log(`Server ${port}unda ayağa kalktı.`)
